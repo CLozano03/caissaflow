@@ -67,6 +67,7 @@ add_executable(unit_tests
 tests/attacks/king_attacks.cpp
 tests/attacks/knight_attacks.cpp
 tests/attacks/pawn_attacks.cpp
+tests/attacks/rook_attacks.cpp
 )
 
 # Link against the core library and GTest
