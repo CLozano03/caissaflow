@@ -1,3 +1,9 @@
+build/
+bin/
+
+# Generated source files
+src/magic_data.h
+
 # Prerequisites
 *.d
 
