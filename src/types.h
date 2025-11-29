@@ -7,13 +7,31 @@
 // Each bit corresponds to a square on the board and indicates presence of one
 // unique type piece for that bitboard.
 typedef uint64_t Bitboard;
+using Bitboard = uint64_t;
 
-enum Color { WHITE, BLACK, BOTH };
+enum Color : int8_t { WHITE, BLACK, COLOR_NB = 2 };
+static constexpr int BOTH = COLOR_NB;
+
 enum Piece { P, N, B, R, Q, K, p, n, b, r, q, k };
-enum CastlingRights { WK = 1, WQ = 2, BK = 4, BQ = 8 };
+
+enum CastlingRights : int8_t {
+  NO_CASTLING,
+  WHITE_OO,
+  WHITE_OOO = WHITE_OO << 1,
+  BLACK_OO = WHITE_OO << 2,
+  BLACK_OOO = WHITE_OO << 3,
+
+  KING_SIDE = WHITE_OO | BLACK_OO,
+  QUEEN_SIDE = WHITE_OOO | BLACK_OOO,
+  WHITE_CASTLING = WHITE_OO | WHITE_OOO,
+  BLACK_CASTLING = BLACK_OO | BLACK_OOO,
+  ANY_CASTLING = WHITE_CASTLING | BLACK_CASTLING,
+
+  CASTLING_RIGHT_NB = 16
+};
 
 // Enum for each square on the chessboard
-enum Square : int {
+enum Square : int8_t {
   a1,
   b1,
   c1,
@@ -78,7 +96,21 @@ enum Square : int {
   f8,
   g8,
   h8,
-  no_sq
+  no_sq,
+
+  SQUARE_ZERO = 0,
+  SQUARE_NB = 64
 };
+
+inline Square &operator++(Square &s) {
+  s = static_cast<Square>(static_cast<int>(s) + 1);
+  return s;
+}
+
+inline Square operator++(Square &s, int) {
+  Square temp = s;
+  ++s;
+  return temp;
+}
 
 #endif

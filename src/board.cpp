@@ -125,16 +125,16 @@ void Board::parse_fen(const std::string_view fen) {
   while (index < fen.length() && fen[index] != ' ') {
     switch (fen[index]) {
     case 'K':
-      castle |= WK;
+      castle |= WHITE_OO;
       break;
     case 'Q':
-      castle |= WQ;
+      castle |= WHITE_OOO;
       break;
     case 'k':
-      castle |= BK;
+      castle |= BLACK_OO;
       break;
     case 'q':
-      castle |= BQ;
+      castle |= BLACK_OOO;
       break;
     case '-':
       break;
@@ -183,7 +183,8 @@ void Board::print() {
   std::cout << "     Enpassant: "
             << (enpassant != no_sq ? square_to_coordinates[enpassant] : "no")
             << "\n";
-  std::cout << "     Castling:  " << ((castle & WK) ? 'K' : '-')
-            << ((castle & WQ) ? 'Q' : '-') << ((castle & BK) ? 'k' : '-')
-            << ((castle & BQ) ? 'q' : '-') << "\n\n";
+  std::cout << "     Castling:  " << ((castle & WHITE_OO) ? 'K' : '-')
+            << ((castle & WHITE_OOO) ? 'Q' : '-')
+            << ((castle & BLACK_OO) ? 'k' : '-')
+            << ((castle & BLACK_OOO) ? 'q' : '-') << "\n\n";
 }

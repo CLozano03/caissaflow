@@ -2,8 +2,7 @@
 #define BITBOARD_H
 
 #include "types.h"
-
-using Bitboard = uint64_t;
+#include <string>
 
 // This constants help to prevent wrap-around when calculating piece attacks
 // Don't think too much about their values, just trust that they work :)
@@ -26,6 +25,13 @@ inline void set_bit(Bitboard &bitboard, int sq) {
 inline void pop_bit(Bitboard &bitboard, int sq) {
   (bitboard) &= ~(1ULL << (sq));
 }
+
+struct Visual {
+  Bitboard bb;
+  Visual(Bitboard b) : bb(b) {}
+};
+// Overload << operator for easy printing of Visual struct
+std::ostream &operator<<(std::ostream &os, const Visual &v);
 
 void print_bitboard(Bitboard bitboard);
 
