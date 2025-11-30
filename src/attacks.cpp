@@ -42,27 +42,27 @@ Bitboard mask_knight_attacks(Square square) {
   // NNE (+17)
   if ((bitboard << 17) & not_a_file)
     attacks |= (bitboard << 17);
-  // NEE (+10)
-  if ((bitboard << 10) & not_ab_file)
-    attacks |= (bitboard << 10);
-  // SEE (-6)
-  if ((bitboard >> 6) & not_ab_file)
-    attacks |= (bitboard >> 6);
-  // SSW (-15)
-  if ((bitboard >> 15) & not_h_file)
+  // SSE (-15)
+  if ((bitboard >> 15) & not_a_file)
     attacks |= (bitboard >> 15);
   // NNW (+15)
   if ((bitboard << 15) & not_h_file)
     attacks |= (bitboard << 15);
-  // NWW (+6)
-  if ((bitboard << 6) & not_gh_file)
-    attacks |= (bitboard << 6);
+  // SSW (-17)
+  if ((bitboard >> 17) & not_h_file)
+    attacks |= (bitboard >> 17);
+  // NEE (+10)
+  if ((bitboard << 10) & not_ab_file)
+    attacks |= (bitboard << 10);
   // SWW (-10)
   if ((bitboard >> 10) & not_gh_file)
     attacks |= (bitboard >> 10);
-  // SSE (-17)
-  if ((bitboard >> 17) & not_a_file)
-    attacks |= (bitboard >> 17);
+  // NWW (+6)
+  if ((bitboard << 6) & not_gh_file)
+    attacks |= (bitboard << 6);
+  // SEE (-6)
+  if ((bitboard >> 6) & not_ab_file)
+    attacks |= (bitboard >> 6);
 
   return attacks;
 }
