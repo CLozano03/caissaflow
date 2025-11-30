@@ -18,6 +18,9 @@ std::ostream &operator<<(std::ostream &os, const Visual &v) {
     os << "\n";
   }
   os << "\n      a b c d e f g h\n\n";
+
+  os << " Bitboard: " << v.bb << "\n";
+
   return os;
 }
 
