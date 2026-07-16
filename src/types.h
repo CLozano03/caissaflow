@@ -1,20 +1,38 @@
-#ifndef TYPES_H
-#define TYPES_H
+#pragma once
 
+#include <cassert>
 #include <cstdint>
+#include <iostream>
+#include <string>
 
 // Bitboard is a 64-bit integer representing the chessboard
 // Each bit corresponds to a square on the board and indicates presence of one
 // unique type piece for that bitboard.
-typedef uint64_t Bitboard;
 using Bitboard = uint64_t;
+using Key = uint64_t;
 
-enum Color : int8_t { WHITE, BLACK, COLOR_NB = 2 };
+// A simple linear congruential generator for pseudo-random keys, used for
+// Zobrist hashing
+constexpr Key zhash(uint64_t seed) {
+  return seed * 6364136223846793005ULL + 1442695040888963407ULL;
+}
+
+enum Color : std::int8_t { WHITE, BLACK, COLOR_NB = 2 };
 static constexpr int BOTH = COLOR_NB;
 
 enum Piece { P, N, B, R, Q, K, p, n, b, r, q, k };
+enum PieceType : std::int8_t {
+  NO_PIECE,
+  PAWN,
+  KNIGHT,
+  BISHOP,
+  ROOK,
+  QUEEN,
+  KING,
+  PIECE_TYPE_NB
+};
 
-enum CastlingRights : int8_t {
+enum CastlingRights : std::int8_t {
   NO_CASTLING,
   WHITE_OO,
   WHITE_OOO = WHITE_OO << 1,
@@ -29,6 +47,8 @@ enum CastlingRights : int8_t {
 
   CASTLING_RIGHT_NB = 16
 };
+
+enum MoveType : uint8_t { NORMAL = 0, PROMOTION, EN_PASSANT, CASTLING };
 
 // Enum for each square on the chessboard
 enum Square : int8_t {
@@ -113,4 +133,85 @@ inline Square operator++(Square &s, int) {
   return temp;
 }
 
-#endif
+// A move needs 16 bits to be stored:
+// bit  0- 5: destination square (from 0 to 63)
+// bit  6-11: origin square (from 0 to 63)
+// bit 12-13: promotion piece type - 2 (from KNIGHT-2 to QUEEN-2)
+// bit 14-15: special move flag: promotion (1), en passant (2), castling (3)
+// NOTE: en passant bit is set only when a pawn can be captured
+class Move {
+public:
+  Move() = default;
+  constexpr explicit Move(uint16_t d) : data(d) {}
+
+  // Constructor for normal moves (no promotion, no special flags)
+  constexpr Move(Square from, Square to) : data((from << 6) + to) {}
+
+  template <MoveType T>
+  static constexpr Move make(Square from, Square to, PieceType pt = KNIGHT) {
+    return Move((T << 14) + ((pt - KNIGHT) << 12) + (from << 6) + to);
+  }
+
+  constexpr bool is_ok() const {
+    return none().data != data && null().data != data;
+  }
+  static constexpr Move null() { return Move(65); }
+  static constexpr Move none() { return Move(0); }
+
+  // Getters
+  constexpr Square from_sq() const {
+    // assert(is_ok());
+    return Square((data >> 6) & 0x3F);
+  }
+  constexpr Square to_sq() const {
+    // assert(is_ok());
+    return Square(data & 0x3F);
+  }
+  constexpr MoveType type_of() const {
+    return static_cast<MoveType>((data >> 14) & 0xF);
+  }
+  constexpr PieceType promo_piece() const {
+    assert(type_of() == PROMOTION);
+    return static_cast<PieceType>(((data >> 12) & 0x3) + KNIGHT);
+  }
+
+  bool operator==(const Move &other) const { return data == other.data; }
+  bool operator!=(const Move &other) const { return data != other.data; }
+  constexpr explicit operator bool() const { return data != 0; }
+
+  inline std::uint16_t raw() const { return data; }
+
+  struct MoveHash {
+    std::size_t operator()(const Move &m) const { return zhash(m.data); }
+  };
+
+protected:
+  std::uint16_t data;
+};
+
+
+// Printing a move in algebraic notation (e.g., e2e4, e7e8q for promotion)
+inline std::ostream &operator<<(std::ostream &os, const Move &m) {
+  Square from = m.from_sq();
+  Square to = m.to_sq();
+
+  auto to_coords = [](Square sq) mutable -> std::string {
+    char file = 'a' + (sq % 8);
+    char rank = '1' + (sq / 8);
+    return {file, rank};
+  };
+
+  os << to_coords(from) << to_coords(to);
+
+  if (!(m.type_of() == PROMOTION)) {
+    return os;
+  }
+
+  PieceType promo = m.promo_piece();
+  std::string promo_str = (promo == KNIGHT)   ? "n"
+                          : (promo == BISHOP) ? "b"
+                          : (promo == ROOK)   ? "r"
+                          : (promo == QUEEN)  ? "q"
+                                              : "?";
+  return os << promo_str;
+}

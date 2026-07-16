@@ -4,6 +4,7 @@ project(caissaflow)
 # C++ Standard Configuration
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_INSTALL_PREFIX "${CMAKE_BINARY_DIR}/dist" CACHE PATH "Default installation path" FORCE)
 
 # Dependencies (GoogleTest)
 include(FetchContent)
@@ -34,13 +35,12 @@ add_custom_command(
 # This acts as a bridge between the file generation and the library
 add_custom_target(generate_magics_target DEPENDS ${MAGIC_HEADER})
 
-# -------------------------------------------------------------
-# Chess Engine Library (The Core)
-# -------------------------------------------------------------
+# Chess Engine Library
 add_library(chess_core 
     src/attacks.cpp
     src/bitboard.cpp
-    src/board.cpp
+    src/position.cpp
+    src/movegen.cpp
 )
 
 # IMPORTANT: Explicitly tell CMake that chess_core depends on the generation step.
@@ -69,6 +69,8 @@ tests/attacks/knight_attacks.cpp
 tests/attacks/pawn_attacks.cpp
 tests/attacks/rook_attacks.cpp
 tests/attacks/bishop_attacks.cpp
+tests/attacks/is_square_attacked.cpp
+tests/moves/moves.cpp
 )
 
 # Link against the core library and GTest

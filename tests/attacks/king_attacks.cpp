@@ -11,7 +11,7 @@ TEST_F(KingAttackTest, CornerSquare_a1) {
   set_bit(expected, a2);
   set_bit(expected, b2);
   Bitboard result = Attacks::mask_king_attacks(a1);
-  EXPECT_EQ(result, expected) << "King on a1 error:\n" << Visual(result);
+  EXPECT_EQ(result, expected) << "King on a1 error:\n" << visual_bb(result);
 }
 
 TEST_F(KingAttackTest, CornerSquare_h1) {
@@ -20,7 +20,7 @@ TEST_F(KingAttackTest, CornerSquare_h1) {
   set_bit(expected, g2);
   set_bit(expected, h2);
   Bitboard result = Attacks::mask_king_attacks(h1);
-  EXPECT_EQ(result, expected) << "King on h1 error:\n" << Visual(result);
+  EXPECT_EQ(result, expected) << "King on h1 error:\n" << visual_bb(result);
 }
 
 TEST_F(KingAttackTest, CornerSquare_a8) {
@@ -29,7 +29,7 @@ TEST_F(KingAttackTest, CornerSquare_a8) {
   set_bit(expected, b7);
   set_bit(expected, b8);
   Bitboard result = Attacks::mask_king_attacks(a8);
-  EXPECT_EQ(result, expected) << "King on a8 error:\n" << Visual(result);
+  EXPECT_EQ(result, expected) << "King on a8 error:\n" << visual_bb(result);
 }
 
 TEST_F(KingAttackTest, CornerSquare_h8) {
@@ -38,7 +38,7 @@ TEST_F(KingAttackTest, CornerSquare_h8) {
   set_bit(expected, h7);
   set_bit(expected, g8);
   Bitboard result = Attacks::mask_king_attacks(h8);
-  EXPECT_EQ(result, expected) << "King on h8 error:\n" << Visual(result);
+  EXPECT_EQ(result, expected) << "King on h8 error:\n" << visual_bb(result);
 }
 
 TEST_F(KingAttackTest, EdgeSquare_d1) {
@@ -49,7 +49,7 @@ TEST_F(KingAttackTest, EdgeSquare_d1) {
   set_bit(expected, d2);
   set_bit(expected, e2);
   Bitboard result = Attacks::mask_king_attacks(d1);
-  EXPECT_EQ(result, expected) << "King on d1 error:\n" << Visual(result);
+  EXPECT_EQ(result, expected) << "King on d1 error:\n" << visual_bb(result);
 }
 
 TEST_F(KingAttackTest, EdgeSquare_e1) {
@@ -60,7 +60,7 @@ TEST_F(KingAttackTest, EdgeSquare_e1) {
   set_bit(expected, e2);
   set_bit(expected, f2);
   Bitboard result = Attacks::mask_king_attacks(e1);
-  EXPECT_EQ(result, expected) << "King on e1 error:\n" << Visual(result);
+  EXPECT_EQ(result, expected) << "King on e1 error:\n" << visual_bb(result);
 }
 
 TEST_F(KingAttackTest, EdgeSquare_b1) {
@@ -71,7 +71,7 @@ TEST_F(KingAttackTest, EdgeSquare_b1) {
   set_bit(expected, b2);
   set_bit(expected, c2);
   Bitboard result = Attacks::mask_king_attacks(b1);
-  EXPECT_EQ(result, expected) << "King on b1 error:\n" << Visual(result);
+  EXPECT_EQ(result, expected) << "King on b1 error:\n" << visual_bb(result);
 }
 
 TEST_F(KingAttackTest, EdgeSquare_d8) {
@@ -82,7 +82,7 @@ TEST_F(KingAttackTest, EdgeSquare_d8) {
   set_bit(expected, c8);
   set_bit(expected, e8);
   Bitboard result = Attacks::mask_king_attacks(d8);
-  EXPECT_EQ(result, expected) << "King on d8 error:\n" << Visual(result);
+  EXPECT_EQ(result, expected) << "King on d8 error:\n" << visual_bb(result);
 }
 
 TEST_F(KingAttackTest, EdgeSquare_g8) {
@@ -93,7 +93,7 @@ TEST_F(KingAttackTest, EdgeSquare_g8) {
   set_bit(expected, f8);
   set_bit(expected, h8);
   Bitboard result = Attacks::mask_king_attacks(g8);
-  EXPECT_EQ(result, expected) << "King on g8 error:\n" << Visual(result);
+  EXPECT_EQ(result, expected) << "King on g8 error:\n" << visual_bb(result);
 }
 
 TEST_F(KingAttackTest, EdgeSquare_a4) {
@@ -104,7 +104,7 @@ TEST_F(KingAttackTest, EdgeSquare_a4) {
   set_bit(expected, a5);
   set_bit(expected, b5);
   Bitboard result = Attacks::mask_king_attacks(a4);
-  EXPECT_EQ(result, expected) << "King on a4 error:\n" << Visual(result);
+  EXPECT_EQ(result, expected) << "King on a4 error:\n" << visual_bb(result);
 }
 
 TEST_F(KingAttackTest, EdgeSquare_a5) {
@@ -115,7 +115,7 @@ TEST_F(KingAttackTest, EdgeSquare_a5) {
   set_bit(expected, a6);
   set_bit(expected, b6);
   Bitboard result = Attacks::mask_king_attacks(a5);
-  EXPECT_EQ(result, expected) << "King on a5 error:\n" << Visual(result);
+  EXPECT_EQ(result, expected) << "King on a5 error:\n" << visual_bb(result);
 }
 
 TEST_F(KingAttackTest, EdgeSquare_a2) {
@@ -126,7 +126,7 @@ TEST_F(KingAttackTest, EdgeSquare_a2) {
   set_bit(expected, a3);
   set_bit(expected, b3);
   Bitboard result = Attacks::mask_king_attacks(a2);
-  EXPECT_EQ(result, expected) << "King on a2 error:\n" << Visual(result);
+  EXPECT_EQ(result, expected) << "King on a2 error:\n" << visual_bb(result);
 }
 
 TEST_F(KingAttackTest, EdgeSquare_h4) {
@@ -137,7 +137,7 @@ TEST_F(KingAttackTest, EdgeSquare_h4) {
   set_bit(expected, g5);
   set_bit(expected, h5);
   Bitboard result = Attacks::mask_king_attacks(h4);
-  EXPECT_EQ(result, expected) << "King on h4 error:\n" << Visual(result);
+  EXPECT_EQ(result, expected) << "King on h4 error:\n" << visual_bb(result);
 }
 
 TEST_F(KingAttackTest, EdgeSquare_h5) {
@@ -148,7 +148,7 @@ TEST_F(KingAttackTest, EdgeSquare_h5) {
   set_bit(expected, g6);
   set_bit(expected, h6);
   Bitboard result = Attacks::mask_king_attacks(h5);
-  EXPECT_EQ(result, expected) << "King on h5 error:\n" << Visual(result);
+  EXPECT_EQ(result, expected) << "King on h5 error:\n" << visual_bb(result);
 }
 
 TEST_F(KingAttackTest, EdgeSquare_h7) {
@@ -159,7 +159,7 @@ TEST_F(KingAttackTest, EdgeSquare_h7) {
   set_bit(expected, g8);
   set_bit(expected, h8);
   Bitboard result = Attacks::mask_king_attacks(h7);
-  EXPECT_EQ(result, expected) << "King on h7 error:\n" << Visual(result);
+  EXPECT_EQ(result, expected) << "King on h7 error:\n" << visual_bb(result);
 }
 
 TEST_F(KingAttackTest, EdgeSquare_h2) {
@@ -170,7 +170,7 @@ TEST_F(KingAttackTest, EdgeSquare_h2) {
   set_bit(expected, g3);
   set_bit(expected, h3);
   Bitboard result = Attacks::mask_king_attacks(h2);
-  EXPECT_EQ(result, expected) << "King on h2 error:\n" << Visual(result);
+  EXPECT_EQ(result, expected) << "King on h2 error:\n" << visual_bb(result);
 }
 
 TEST_F(KingAttackTest, CenterSquare_d4) {
@@ -184,7 +184,7 @@ TEST_F(KingAttackTest, CenterSquare_d4) {
   set_bit(expected, d5);
   set_bit(expected, e5);
   Bitboard result = Attacks::mask_king_attacks(d4);
-  EXPECT_EQ(result, expected) << "King on d4 error:\n" << Visual(result);
+  EXPECT_EQ(result, expected) << "King on d4 error:\n" << visual_bb(result);
 }
 
 TEST_F(KingAttackTest, CenterSquare_e4) {
@@ -198,7 +198,7 @@ TEST_F(KingAttackTest, CenterSquare_e4) {
   set_bit(expected, e5);
   set_bit(expected, f5);
   Bitboard result = Attacks::mask_king_attacks(e4);
-  EXPECT_EQ(result, expected) << "King on e4 error:\n" << Visual(result);
+  EXPECT_EQ(result, expected) << "King on e4 error:\n" << visual_bb(result);
 }
 
 TEST_F(KingAttackTest, CenterSquare_d5) {
@@ -212,7 +212,7 @@ TEST_F(KingAttackTest, CenterSquare_d5) {
   set_bit(expected, d6);
   set_bit(expected, e6);
   Bitboard result = Attacks::mask_king_attacks(d5);
-  EXPECT_EQ(result, expected) << "King on d5 error:\n" << Visual(result);
+  EXPECT_EQ(result, expected) << "King on d5 error:\n" << visual_bb(result);
 }
 
 TEST_F(KingAttackTest, CenterSquare_e5) {
@@ -226,7 +226,7 @@ TEST_F(KingAttackTest, CenterSquare_e5) {
   set_bit(expected, e6);
   set_bit(expected, f6);
   Bitboard result = Attacks::mask_king_attacks(e5);
-  EXPECT_EQ(result, expected) << "King on e5 error:\n" << Visual(result);
+  EXPECT_EQ(result, expected) << "King on e5 error:\n" << visual_bb(result);
 }
 
 TEST_F(KingAttackTest, InnerRing_b2) {
@@ -240,7 +240,7 @@ TEST_F(KingAttackTest, InnerRing_b2) {
   set_bit(expected, b3);
   set_bit(expected, c3);
   Bitboard result = Attacks::mask_king_attacks(b2);
-  EXPECT_EQ(result, expected) << "King on b2 error:\n" << Visual(result);
+  EXPECT_EQ(result, expected) << "King on b2 error:\n" << visual_bb(result);
 }
 
 TEST_F(KingAttackTest, InnerRing_g2) {
@@ -254,7 +254,7 @@ TEST_F(KingAttackTest, InnerRing_g2) {
   set_bit(expected, g3);
   set_bit(expected, h3);
   Bitboard result = Attacks::mask_king_attacks(g2);
-  EXPECT_EQ(result, expected) << "King on g2 error:\n" << Visual(result);
+  EXPECT_EQ(result, expected) << "King on g2 error:\n" << visual_bb(result);
 }
 
 TEST_F(KingAttackTest, InnerRing_b7) {
@@ -268,7 +268,7 @@ TEST_F(KingAttackTest, InnerRing_b7) {
   set_bit(expected, b8);
   set_bit(expected, c8);
   Bitboard result = Attacks::mask_king_attacks(b7);
-  EXPECT_EQ(result, expected) << "King on b7 error:\n" << Visual(result);
+  EXPECT_EQ(result, expected) << "King on b7 error:\n" << visual_bb(result);
 }
 
 TEST_F(KingAttackTest, InnerRing_g7) {
@@ -282,7 +282,7 @@ TEST_F(KingAttackTest, InnerRing_g7) {
   set_bit(expected, g8);
   set_bit(expected, h8);
   Bitboard result = Attacks::mask_king_attacks(g7);
-  EXPECT_EQ(result, expected) << "King on g7 error:\n" << Visual(result);
+  EXPECT_EQ(result, expected) << "King on g7 error:\n" << visual_bb(result);
 }
 
 TEST_F(KingAttackTest, MidSquare_c3) {
@@ -296,7 +296,7 @@ TEST_F(KingAttackTest, MidSquare_c3) {
   set_bit(expected, c4);
   set_bit(expected, d4);
   Bitboard result = Attacks::mask_king_attacks(c3);
-  EXPECT_EQ(result, expected) << "King on c3 error:\n" << Visual(result);
+  EXPECT_EQ(result, expected) << "King on c3 error:\n" << visual_bb(result);
 }
 
 TEST_F(KingAttackTest, MidSquare_f3) {
@@ -310,7 +310,7 @@ TEST_F(KingAttackTest, MidSquare_f3) {
   set_bit(expected, f4);
   set_bit(expected, g4);
   Bitboard result = Attacks::mask_king_attacks(f3);
-  EXPECT_EQ(result, expected) << "King on f3 error:\n" << Visual(result);
+  EXPECT_EQ(result, expected) << "King on f3 error:\n" << visual_bb(result);
 }
 
 TEST_F(KingAttackTest, MidSquare_c6) {
@@ -324,7 +324,7 @@ TEST_F(KingAttackTest, MidSquare_c6) {
   set_bit(expected, c7);
   set_bit(expected, d7);
   Bitboard result = Attacks::mask_king_attacks(c6);
-  EXPECT_EQ(result, expected) << "King on c6 error:\n" << Visual(result);
+  EXPECT_EQ(result, expected) << "King on c6 error:\n" << visual_bb(result);
 }
 
 TEST_F(KingAttackTest, MidSquare_f6) {
@@ -338,7 +338,7 @@ TEST_F(KingAttackTest, MidSquare_f6) {
   set_bit(expected, f7);
   set_bit(expected, g7);
   Bitboard result = Attacks::mask_king_attacks(f6);
-  EXPECT_EQ(result, expected) << "King on f6 error:\n" << Visual(result);
+  EXPECT_EQ(result, expected) << "King on f6 error:\n" << visual_bb(result);
 }
 
 TEST_F(KingAttackTest, MidSquare_b4) {
@@ -352,7 +352,7 @@ TEST_F(KingAttackTest, MidSquare_b4) {
   set_bit(expected, b5);
   set_bit(expected, c5);
   Bitboard result = Attacks::mask_king_attacks(b4);
-  EXPECT_EQ(result, expected) << "King on b4 error:\n" << Visual(result);
+  EXPECT_EQ(result, expected) << "King on b4 error:\n" << visual_bb(result);
 }
 
 TEST_F(KingAttackTest, MidSquare_g5) {
@@ -366,5 +366,5 @@ TEST_F(KingAttackTest, MidSquare_g5) {
   set_bit(expected, g6);
   set_bit(expected, h6);
   Bitboard result = Attacks::mask_king_attacks(g5);
-  EXPECT_EQ(result, expected) << "King on g5 error:\n" << Visual(result);
+  EXPECT_EQ(result, expected) << "King on g5 error:\n" << visual_bb(result);
 }

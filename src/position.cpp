@@ -1,6 +1,7 @@
-#include "board.h"
+#include "position.h"
 #include <cstring>
 #include <iostream>
+#include <sstream>
 
 const char *square_to_coordinates[] = {
     "a1", "b1", "c1", "d1", "e1", "f1", "g1", "h1", "a2", "b2", "c2",
@@ -13,17 +14,15 @@ const char *square_to_coordinates[] = {
 const char ascii_pieces[12] = {'P', 'N', 'B', 'R', 'Q', 'K',
                                'p', 'n', 'b', 'r', 'q', 'k'};
 
-Board::Board() { reset(); }
+void Position::reset() {
+  st = &setupState;
+  setupState = StateInfo();
 
-void Board::reset() {
   std::memset(bitboards, 0, sizeof(bitboards));
   std::memset(occupancies, 0, sizeof(occupancies));
-  side = WHITE;
-  enpassant = no_sq;
-  castle = 0;
 }
 
-void Board::update_occupancies() {
+void Position::update_occupancies() {
   std::memset(occupancies, 0, sizeof(occupancies));
 
   for (int piece = P; piece <= K; piece++) {
@@ -38,8 +37,9 @@ void Board::update_occupancies() {
   occupancies[BOTH] |= occupancies[BLACK];
 }
 
-void Board::parse_fen(const std::string_view fen) {
+void Position::set_pos(const std::string_view fen) {
   reset();
+  std::istringstream ss(fen.data());
 
   size_t index = 0;
   int rank = 0; // FEN starts from rank 8.
@@ -115,9 +115,9 @@ void Board::parse_fen(const std::string_view fen) {
   while (index < fen.length() && fen[index] == ' ')
     index++;
 
-  // Parse side to move
+  // Parse sideToMove to move
   if (index < fen.length()) {
-    side = (fen[index] == 'w') ? WHITE : BLACK;
+    sideToMove = (fen[index] == 'w') ? WHITE : BLACK;
     index += 2;
   }
 
@@ -125,16 +125,20 @@ void Board::parse_fen(const std::string_view fen) {
   while (index < fen.length() && fen[index] != ' ') {
     switch (fen[index]) {
     case 'K':
-      castle |= WHITE_OO;
+      st->castle_rights =
+          static_cast<CastlingRights>(st->castle_rights | WHITE_OO);
       break;
     case 'Q':
-      castle |= WHITE_OOO;
+      st->castle_rights =
+          static_cast<CastlingRights>(st->castle_rights | WHITE_OOO);
       break;
     case 'k':
-      castle |= BLACK_OO;
+      st->castle_rights =
+          static_cast<CastlingRights>(st->castle_rights | BLACK_OO);
       break;
     case 'q':
-      castle |= BLACK_OOO;
+      st->castle_rights =
+          static_cast<CastlingRights>(st->castle_rights | BLACK_OOO);
       break;
     case '-':
       break;
@@ -147,7 +151,8 @@ void Board::parse_fen(const std::string_view fen) {
   if (index < fen.length() && fen[index] != '-') {
     int file_idx = fen[index] - 'a';
     int rank_idx = fen[index + 1] - '1';
-    enpassant = rank_idx * 8 + file_idx;
+    int sq_idx = rank_idx * 8 + file_idx;
+    enpassant = static_cast<Square>(sq_idx);
     index += 2;
   } else {
     enpassant = no_sq;
@@ -157,34 +162,37 @@ void Board::parse_fen(const std::string_view fen) {
   update_occupancies();
 }
 
-void Board::print() {
-  std::cout << "\n";
+std::ostream &operator<<(std::ostream &os, const Position &pos) {
+  os << "\n";
   for (int rank = 0; rank < 8; rank++) {
     for (int file = 0; file < 8; file++) {
       int square = (7 - rank) * 8 + file;
       if (!file)
-        std::cout << "  " << 8 - rank << "  ";
+        os << "  " << 8 - rank << "  ";
 
       int piece = -1;
       for (int bb_piece = P; bb_piece <= k; bb_piece++) {
-        if (get_bit(bitboards[bb_piece], square)) {
+        if (get_bit(pos.bitboards[bb_piece], square)) {
           piece = bb_piece;
           break;
         }
       }
-      std::cout << (piece != -1 ? ascii_pieces[piece] : '.') << " ";
+      os << (piece != -1 ? ascii_pieces[piece] : '.') << " ";
     }
-    std::cout << "\n";
+    os << "\n";
   }
-  std::cout << "\n     a b c d e f g h\n\n";
+  os << "     a b c d e f g h\n\n";
 
-  std::cout << "     Side:      " << (side == WHITE ? "white" : "black")
-            << "\n";
-  std::cout << "     Enpassant: "
-            << (enpassant != no_sq ? square_to_coordinates[enpassant] : "no")
-            << "\n";
-  std::cout << "     Castling:  " << ((castle & WHITE_OO) ? 'K' : '-')
-            << ((castle & WHITE_OOO) ? 'Q' : '-')
-            << ((castle & BLACK_OO) ? 'k' : '-')
-            << ((castle & BLACK_OOO) ? 'q' : '-') << "\n\n";
+  os << "     sideToMove: " << (pos.sideToMove == WHITE ? "white" : "black")
+     << "\n";
+  os << "     Enpassant: "
+     << (pos.enpassant != no_sq ? square_to_coordinates[pos.enpassant] : "no")
+     << "\n";
+
+  os << "     Castling: " << ((pos.castle_rights() & WHITE_OO) ? 'K' : '-');
+  os << ((pos.castle_rights() & WHITE_OOO) ? 'Q' : '-')
+     << ((pos.castle_rights() & BLACK_OO) ? 'k' : '-')
+     << ((pos.castle_rights() & BLACK_OOO) ? 'q' : '-') << "\n\n";
+
+  return os;
 }

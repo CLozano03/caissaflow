@@ -1,7 +1,7 @@
-#ifndef ATTACKS_H
-#define ATTACKS_H
+#pragma once
 
 #include "bitboard.h"
+#include "position.h"
 
 namespace Attacks {
 
@@ -57,8 +57,8 @@ Bitboard bishop_attacks_on_the_fly(Square square, Bitboard block);
 Bitboard mask_rook_attacks(Square square);
 Bitboard rook_attacks_on_the_fly(Square square, Bitboard block);
 
+bool is_square_attacked(Square square, Color side, const Position &pos);
+
 void init();
 
 } // namespace Attacks
-
-#endif

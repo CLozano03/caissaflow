@@ -249,4 +249,46 @@ void init() {
     }
   }
 }
+
+bool is_square_attacked(Square square, Color side, const Position &pos) {
+
+  // 1. Check Pawn Attacks
+  // Logic: We check if a pawn of the OPPOSITE color on 'square'
+  // would capture a pawn of 'side'.
+  // Example: To see if White attacks 'square', pretend there is a Black pawn
+  // on 'square' and see if it attacks any White pawns.
+  if (side == WHITE) {
+    // Check if a Black pawn on 'square' would attack a White pawn
+    if (pawn_attacks[BLACK][square] & pos.bitboards[P])
+      return true;
+  } else {
+    // Check if a White pawn on 'square' would attack a Black pawn
+    if (pawn_attacks[WHITE][square] & pos.bitboards[p])
+      return true;
+  }
+
+  // 2. Check Knight Attacks
+  // Use the Knight on 'square' to find enemy knights
+  if (get_knight_attacks(square) & pos.bitboards[(side == WHITE) ? N : n])
+    return true;
+
+  if (get_king_attacks(square) & pos.bitboards[(side == WHITE) ? K : k])
+    return true;
+
+  // Queens
+  Bitboard diagonal_attackers = pos.bitboards[(side == WHITE) ? B : b] |
+                                pos.bitboards[(side == WHITE) ? Q : q];
+
+  if (get_bishop_attacks(square, pos.occupancies[BOTH]) & diagonal_attackers)
+    return true;
+
+  // Queens
+  Bitboard straight_attackers = pos.bitboards[(side == WHITE) ? R : r] |
+                                pos.bitboards[(side == WHITE) ? Q : q];
+
+  if (get_rook_attacks(square, pos.occupancies[BOTH]) & straight_attackers)
+    return true;
+
+  return false;
+}
 } // namespace Attacks

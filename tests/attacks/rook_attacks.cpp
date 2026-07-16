@@ -30,7 +30,7 @@ TEST_F(RookAttackTest, EmptyBoard_Corner_a1) {
 
   Bitboard result = Attacks::get_rook_attacks(sq, occupancy);
   EXPECT_EQ(result, expected) << "Rook on a1 (Empty) failed:\n"
-                              << Visual(result);
+                              << visual_bb(result);
 }
 
 TEST_F(RookAttackTest, EmptyBoard_Corner_h8) {
@@ -57,7 +57,7 @@ TEST_F(RookAttackTest, EmptyBoard_Corner_h8) {
 
   Bitboard result = Attacks::get_rook_attacks(sq, occupancy);
   EXPECT_EQ(result, expected) << "Rook on h8 (Empty) failed:\n"
-                              << Visual(result);
+                              << visual_bb(result);
 }
 
 TEST_F(RookAttackTest, EmptyBoard_Center_e4) {
@@ -86,7 +86,7 @@ TEST_F(RookAttackTest, EmptyBoard_Center_e4) {
 
   Bitboard result = Attacks::get_rook_attacks(sq, occupancy);
   EXPECT_EQ(result, expected) << "Rook on e4 (Empty) failed:\n"
-                              << Visual(result);
+                              << visual_bb(result);
 }
 
 TEST_F(RookAttackTest, EmptyBoard_Edge_a5) {
@@ -113,7 +113,7 @@ TEST_F(RookAttackTest, EmptyBoard_Edge_a5) {
 
   Bitboard result = Attacks::get_rook_attacks(sq, occupancy);
   EXPECT_EQ(result, expected) << "Rook on a5 (Empty) failed:\n"
-                              << Visual(result);
+                              << visual_bb(result);
 }
 
 TEST_F(RookAttackTest, EmptyBoard_Edge_d1) {
@@ -140,7 +140,7 @@ TEST_F(RookAttackTest, EmptyBoard_Edge_d1) {
 
   Bitboard result = Attacks::get_rook_attacks(sq, occupancy);
   EXPECT_EQ(result, expected) << "Rook on d1 (Empty) failed:\n"
-                              << Visual(result);
+                              << visual_bb(result);
 }
 TEST_F(RookAttackTest, Blocked_Surrounded_d4) {
   Square sq = d4;
@@ -161,7 +161,7 @@ TEST_F(RookAttackTest, Blocked_Surrounded_d4) {
 
   Bitboard result = Attacks::get_rook_attacks(sq, occupancy);
   EXPECT_EQ(result, expected) << "Rook on d4 (Surrounded) failed:\n"
-                              << Visual(result);
+                              << visual_bb(result);
 }
 
 TEST_F(RookAttackTest, Blocked_Corner_a1_Immediate) {
@@ -176,7 +176,7 @@ TEST_F(RookAttackTest, Blocked_Corner_a1_Immediate) {
 
   Bitboard result = Attacks::get_rook_attacks(sq, occupancy);
   EXPECT_EQ(result, expected) << "Rook on a1 (Trapped) failed:\n"
-                              << Visual(result);
+                              << visual_bb(result);
 }
 
 TEST_F(RookAttackTest, Blocked_FarEdges_e4) {
@@ -212,7 +212,7 @@ TEST_F(RookAttackTest, Blocked_FarEdges_e4) {
 
   Bitboard result = Attacks::get_rook_attacks(sq, occupancy);
   EXPECT_EQ(result, expected) << "Rook on e4 (Far Blockers) failed:\n"
-                              << Visual(result);
+                              << visual_bb(result);
 }
 
 TEST_F(RookAttackTest, Shadowing_File_g) {
@@ -242,7 +242,7 @@ TEST_F(RookAttackTest, Shadowing_File_g) {
 
   Bitboard result = Attacks::get_rook_attacks(sq, occupancy);
   EXPECT_EQ(result, expected) << "Rook on g2 (Shadow Test) failed:\n"
-                              << Visual(result);
+                              << visual_bb(result);
 }
 
 TEST_F(RookAttackTest, Shadowing_Rank_5) {
@@ -269,7 +269,7 @@ TEST_F(RookAttackTest, Shadowing_Rank_5) {
 
   Bitboard result = Attacks::get_rook_attacks(sq, occupancy);
   EXPECT_EQ(result, expected) << "Rook on h5 (Shadow Test) failed:\n"
-                              << Visual(result);
+                              << visual_bb(result);
 }
 
 TEST_F(RookAttackTest, Mixed_Scenario_c3) {
@@ -300,7 +300,7 @@ TEST_F(RookAttackTest, Mixed_Scenario_c3) {
 
   Bitboard result = Attacks::get_rook_attacks(sq, occupancy);
   EXPECT_EQ(result, expected) << "Rook on c3 (Mixed) failed:\n"
-                              << Visual(result);
+                              << visual_bb(result);
 }
 
 TEST_F(RookAttackTest, Mixed_Scenario_b7) {
@@ -327,7 +327,7 @@ TEST_F(RookAttackTest, Mixed_Scenario_b7) {
 
   Bitboard result = Attacks::get_rook_attacks(sq, occupancy);
   EXPECT_EQ(result, expected) << "Rook on b7 (Mixed) failed:\n"
-                              << Visual(result);
+                              << visual_bb(result);
 }
 
 TEST_F(RookAttackTest, Tunnel_Vertical_d2) {
@@ -352,7 +352,7 @@ TEST_F(RookAttackTest, Tunnel_Vertical_d2) {
 
   Bitboard result = Attacks::get_rook_attacks(sq, occupancy);
   EXPECT_EQ(result, expected) << "Rook on d2 (Tunnel) failed:\n"
-                              << Visual(result);
+                              << visual_bb(result);
 }
 
 TEST_F(RookAttackTest, Tunnel_Horizontal_f7) {
@@ -377,5 +377,5 @@ TEST_F(RookAttackTest, Tunnel_Horizontal_f7) {
 
   Bitboard result = Attacks::get_rook_attacks(sq, occupancy);
   EXPECT_EQ(result, expected) << "Rook on f7 (Tunnel) failed:\n"
-                              << Visual(result);
+                              << visual_bb(result);
 }
